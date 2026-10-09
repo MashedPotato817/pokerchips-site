@@ -14,6 +14,7 @@ function createGame() {
     const elements = new Map();
     const storage = new Map();
     const timers = new Map();
+    const intervals = new Map();
     const documentListeners = new Map();
     let timerId = 0;
     function element(id) {
@@ -43,7 +44,9 @@ function createGame() {
         addEventListener() {}, CustomEvent: class { constructor(type) { this.type = type; } },
         localStorage: { getItem: key => storage.get(key), setItem: (key, value) => storage.set(key, value) },
         setTimeout: callback => { timers.set(++timerId, callback); return timerId; },
-        clearTimeout: id => timers.delete(id), setInterval: () => 0, clearInterval() {}, console
+        clearTimeout: id => timers.delete(id),
+        setInterval: callback => { intervals.set(++timerId, callback); return timerId; },
+        clearInterval: id => intervals.delete(id), console
     });
     // Load the same shared language scripts that the browser loads before the game.
     for (const file of ['translations.js', 'i18n.js']) {
@@ -58,6 +61,21 @@ function createGame() {
     render();`, context);
     return {
         element,
+        run(source) { return vm.runInContext(source, context); },
+        timerCount() {
+            const callback = vm.runInContext('runTimerTick', context);
+            return [...intervals.values()].filter(value => value === callback).length;
+        },
+        timerHandle() { return vm.runInContext('_timerInterval', context); },
+        table(stacks, blinds = false) {
+            vm.runInContext(`state.players = ${JSON.stringify(stacks.map((stack, i) => ({name: ['张三', '李四', '王五', '赵六'][i], stack, bet: 0, folded: false, handContrib: 0})))};
+                state.roundActive = false; state.pot = 0; state.buttonPosition = 0;
+                state.handHistory = []; state.handCount = 0;`, context);
+            element('enableBlinds').checked = blinds;
+            element('smallBlind').value = '5';
+            element('bigBlind').value = '10';
+            element('startRound').onclick();
+        },
         language(value) { context.I18n.setLanguage(value); },
         snapshot: () => JSON.parse(vm.runInContext('JSON.stringify(serializeState())', context)),
         open(idx = 0) {
@@ -77,7 +95,13 @@ function createGame() {
             else element('confirmRename').onclick();
         },
         flush() { for (const callback of [...timers.values()]) callback(); timers.clear(); },
-        restore() { vm.runInContext('loadSavedState(); render();', context); }
+        restore() {
+            // Discard the in-memory state so a broken storage restore cannot pass.
+            vm.runInContext(`state = {players: [], pot: -1, toAct: new Set(),
+                handHistory: [], tournament: {active: false}};`, context);
+            assert.equal(vm.runInContext('loadSavedState()', context), true);
+            vm.runInContext('render()', context);
+        }
     };
 }
 
@@ -176,3 +200,113 @@ for (const name of ['   ', '<b>小明</b>', '名'.repeat(21)]) {
         assert.ok(game.element('toast').textContent.length > 0);
     });
 }
+
+test('heads-up blinds and next street survive language switches and saved-state reload', () => {
+    const game = createGame();
+    game.table([1000, 1000], true);
+    assert.deepEqual(game.snapshot().players.map(p => [p.stack, p.bet]), [[995, 5], [990, 10]]);
+    assert.equal(game.snapshot().currentPlayerIndex, 0);
+    game.element('callBtn').onclick();
+    game.language('zh-CN');
+    game.element('checkBtn').onclick();
+    const before = game.snapshot();
+    assert.equal(before.street, 'flop');
+    assert.equal(before.currentPlayerIndex, 1);
+    assert.equal(before.pot, 20);
+    assert.equal(before.players.reduce((sum, p) => sum + p.stack, before.pot), 2000);
+    game.language('en');
+    game.flush(); game.restore();
+    assert.deepEqual(game.snapshot(), before);
+});
+
+test('betting then folding awards the full pot once and rotates the dealer', () => {
+    const game = createGame();
+    game.table([1000, 1000]);
+    game.element('amount').value = '20';
+    game.element('betBtn').onclick();
+    game.language('zh-CN');
+    game.element('foldBtn').onclick();
+    const result = game.snapshot();
+    assert.equal(result.roundActive, false);
+    assert.equal(result.pot, 0);
+    assert.equal(result.buttonPosition, 1);
+    assert.deepEqual(result.players.map(p => p.stack), [1000, 1000]);
+    assert.deepEqual(result.handHistory, [{hand: 1, winner: '李四', amount: 20}]);
+    game.element('foldBtn').onclick();
+    assert.deepEqual(game.snapshot(), result);
+});
+
+test('all-in calls form main and side pots without losing chips or admitting ineligible winners', () => {
+    const game = createGame();
+    game.table([1000, 400, 1000]);
+    game.element('amount').value = '400';
+    game.element('betBtn').onclick();
+    game.element('amount').value = '400';
+    game.element('raiseBtn').onclick();
+    game.element('callBtn').onclick();
+    game.element('callBtn').onclick();
+    const before = game.snapshot();
+    assert.equal(before.street, 'flop');
+    assert.equal(before.pot, 2000);
+    assert.equal(before.players.reduce((sum, p) => sum + p.stack, before.pot), 2400);
+    assert.deepEqual(JSON.parse(game.run('JSON.stringify(computePots())')), [
+        {amount: 1200, eligible: [0, 1, 2]}, {amount: 800, eligible: [0, 2]}
+    ]);
+    game.language('zh-CN'); game.language('en');
+    assert.deepEqual(game.snapshot(), before);
+});
+
+test('folded contributions remain in side pots but folded players cannot win', () => {
+    const game = createGame();
+    game.run(`state.players = [
+        {name: '张三', stack: 0, handContrib: 100, folded: false},
+        {name: '李四', stack: 0, handContrib: 300, folded: false},
+        {name: '王五', stack: 100, handContrib: 500, folded: false},
+        {name: '赵六', stack: 100, handContrib: 200, folded: true}
+    ]; state.pot = 1100;`);
+    assert.deepEqual(JSON.parse(game.run('JSON.stringify(computePots())')), [
+        {amount: 400, eligible: [0, 1, 2]},
+        {amount: 500, eligible: [1, 2]},
+        {amount: 200, eligible: [2]}
+    ]);
+});
+
+test('invalid checks and below-minimum raises preserve chips, turn and saved state', () => {
+    const game = createGame();
+    game.table([1000, 1000], true);
+    const before = game.snapshot();
+    game.element('checkBtn').onclick();
+    game.element('amount').value = '5';
+    game.element('raiseBtn').onclick();
+    assert.deepEqual(game.snapshot(), before);
+    game.flush(); game.restore();
+    assert.deepEqual(game.snapshot(), before);
+});
+
+test('language changes do not restart the tournament timer or alter blind progression', () => {
+    const game = createGame();
+    game.table([1000, 1000]);
+    game.element('levelMinutes').value = '1';
+    game.element('timerBtn').onclick();
+    assert.equal(game.timerCount(), 1);
+    const timerHandle = game.timerHandle();
+    game.run('runTimerTick()');
+    const before = game.snapshot();
+    assert.equal(before.tournament.secondsLeft, 59);
+    game.language('zh-CN');
+    assert.equal(game.element('timerBtn').textContent, '停止计时');
+    assert.deepEqual(game.snapshot(), before);
+    assert.equal(game.timerCount(), 1);
+    assert.equal(game.timerHandle(), timerHandle);
+    game.run('for (let i = 0; i < 60; i++) runTimerTick()');
+    assert.equal(game.snapshot().tournament.level, 2);
+    assert.equal(game.snapshot().tournament.secondsLeft, 60);
+    assert.equal(game.element('bigBlind').value, 15);
+    game.language('en');
+    assert.equal(game.timerCount(), 1);
+    assert.equal(game.timerHandle(), timerHandle);
+    assert.equal(game.element('timerBtn').textContent, 'Stop Timer');
+    game.element('timerBtn').onclick();
+    assert.equal(game.snapshot().tournament.active, false);
+    assert.equal(game.timerCount(), 0);
+});
