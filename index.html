@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,24 +14,24 @@
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Live Poker Tracker - Free Online Poker Chip Counter & Game Manager</title>
-    <meta name="description" content="Free online poker tracker for managing chips, blinds, and game state. Perfect for home poker games, tournaments, and cash games. Track pots, bets, and player stacks in real-time.">
+    <title>德州扑克计分器 - 筹码与牌局管理</title>
+    <meta name="description" content="德州扑克计分器，用于管理玩家筹码、盲注和牌局状态，记录底池、下注与剩余筹码。">
     <meta name="keywords" content="poker tracker, poker chip counter, poker game tracker, home poker game, poker tournament tracker, texas holdem tracker, free poker app">
     <meta name="author" content="Live Poker Chips">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://livepokerchips.com/">
-    <meta property="og:title" content="Live Poker Tracker - Free Online Poker Chip Counter">
-    <meta property="og:description" content="Free online poker tracker for managing chips, blinds, and game state. Perfect for home poker games and tournaments.">
+    <meta property="og:title" content="德州扑克计分器 - 筹码管理">
+    <meta property="og:description" content="德州扑克计分器，用于管理玩家筹码、盲注和牌局状态，适合朋友聚会与锦标赛。">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://livepokerchips.com/">
     <meta property="og:image" content="https://livepokerchips.com/icon-512.png">
     <meta property="og:image:width" content="512">
     <meta property="og:image:height" content="512">
     <meta property="og:site_name" content="Live Poker Chips">
-    <meta property="og:locale" content="en_US">
+    <meta property="og:locale" content="zh_CN">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Live Poker Tracker - Free Online Poker Chip Counter">
-    <meta name="twitter:description" content="Free online poker tracker for managing chips, blinds, and game state.">
+    <meta name="twitter:title" content="德州扑克计分器 - 筹码管理">
+    <meta name="twitter:description" content="德州扑克计分器，用于管理玩家筹码、盲注和牌局状态。">
     <meta name="twitter:image" content="https://livepokerchips.com/icon-512.png">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -102,22 +102,22 @@
     </style>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Poker Tracker">
+    <meta name="apple-mobile-web-app-title" content="德州计分器">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Live Poker Tracker",
+        "name": "德州扑克计分器",
         "alternateName": "LivePokerChips",
         "url": "https://livepokerchips.com",
-        "description": "Free online poker chip tracker for managing Texas Hold'em home games. Track stacks, blinds, pots, and betting rounds in real-time with multiplayer sync.",
+        "description": "德州扑克计分器，管理玩家筹码、盲注、底池与下注轮次，并支持多人同步。",
         "applicationCategory": "GameApplication",
         "operatingSystem": "Any",
-        "browserRequirements": "Requires a modern web browser with JavaScript enabled",
+        "browserRequirements": "需要支持 JavaScript 的现代浏览器",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
         "datePublished": "2025-11-01",
         "dateModified": "2026-06-18",
-        "featureList": ["Chip stack tracking", "Blinds management", "Pot calculation", "Multiplayer P2P sync", "Offline PWA support"],
+        "featureList": ["玩家筹码记录", "盲注管理", "底池计算", "多人点对点同步", "离线应用支持"],
         "screenshot": "https://livepokerchips.com/icon-512.png",
         "author": { "@type": "Person", "name": "Quinn Allen" },
         "publisher": { "@type": "Organization", "name": "Live Poker Chips", "url": "https://livepokerchips.com" }
@@ -128,44 +128,44 @@
     <header role="banner">
         <a href="index.html" class="brand">
             <span class="chip-mark"></span>
-            <span class="wordmark">LIVE<b>POKER</b></span>
+            <span class="wordmark">德州<b>计分</b></span>
         </a>
         <nav role="navigation">
-            <a href="about.html">About</a>
-            <a href="guide.html">Guide</a>
-            <a href="blog.html">Strategy</a>
-            <a href="connect.html" class="btn-mp">Multiplayer</a>
+            <a href="about.html">关于</a>
+            <a href="guide.html">规则指南</a>
+            <a href="blog.html">策略文章</a>
+            <a href="connect.html" class="btn-mp">多人联机</a>
         </nav>
     </header>
 
-    <h1 class="sr-only">Live Poker Tracker — Free Online Poker Chip Counter & Game Manager</h1>
+    <h1 class="sr-only">德州扑克计分器 — 筹码与牌局管理</h1>
 
     <div class="support-bar">
-        Enjoying this? <a href="https://www.buymeacoffee.com/quinn_dose_tech" target="_blank" rel="noopener">Support development</a>
+        喜欢这个工具？ <a href="https://www.buymeacoffee.com/quinn_dose_tech" target="_blank" rel="noopener">支持开发者</a>
     </div>
 
     <!-- Pot display -->
     <div id="potArea">
         <div id="potChip">
             <div id="pot">0</div>
-            <div class="pot-label">POT</div>
+            <div class="pot-label">底池</div>
         </div>
         <div id="gameStatus">
             <span id="streetName">—</span>
             <span class="status-dot">·</span>
-            <span>Bet <strong id="currentBet">0</strong></span>
+            <span>本轮注额 <strong id="currentBet">0</strong></span>
         </div>
     </div>
 
     <!-- Tournament timer -->
     <div id="timerDisplay" class="hidden">
-        <span id="timerLevel">Level 1</span>
+        <span id="timerLevel">第 1 级</span>
         <span id="timerCountdown" class="mono tnum">20:00</span>
     </div>
 
     <!-- Whose turn -->
     <div id="toActBanner">
-        <span id="currentPlayerName"></span> to act
+        <span id="currentPlayerName"></span> 行动
     </div>
 
     <!-- Players -->
@@ -173,40 +173,40 @@
 
     <!-- Hand history -->
     <details id="handHistory" class="hidden">
-        <summary>Hand History</summary>
+        <summary>牌局记录</summary>
         <div id="historyList"></div>
     </details>
 
     <!-- Setup -->
     <div id="setup">
         <div class="setup-row">
-            <input id="playerName" placeholder="Player name" autocomplete="off" aria-label="Player name" style="flex:1;min-width:120px">
-            <input id="playerStack" class="mono" placeholder="Stack" type="number" value="1000" style="width:96px" aria-label="Starting stack">
-            <button id="addPlayer">Add</button>
+            <input id="playerName" placeholder="玩家姓名" autocomplete="off" aria-label="玩家姓名" style="flex:1;min-width:120px">
+            <input id="playerStack" class="mono" placeholder="筹码" type="number" value="1000" style="width:96px" aria-label="初始筹码">
+            <button id="addPlayer">添加玩家</button>
         </div>
         <div class="setup-row">
             <label class="toggle-label">
                 <input type="checkbox" id="enableBlinds">
-                <span>Blinds</span>
+                <span>盲注</span>
             </label>
             <div id="blindsControls" class="hidden">
-                <input id="smallBlind" class="mono" type="number" value="5" style="width:60px" aria-label="Small blind">
+                <input id="smallBlind" class="mono" type="number" value="5" style="width:60px" aria-label="小盲注">
                 <span style="color:var(--faint)">/</span>
-                <input id="bigBlind" class="mono" type="number" value="10" style="width:60px" aria-label="Big blind">
-                <button id="moveButton">Move BTN</button>
+                <input id="bigBlind" class="mono" type="number" value="10" style="width:60px" aria-label="大盲注">
+                <button id="moveButton">轮换庄家</button>
             </div>
-            <button id="startRound" class="btn-start">Start Round</button>
-            <button id="reset">Reset</button>
+            <button id="startRound" class="btn-start">开始本局</button>
+            <button id="reset">重置本局</button>
         </div>
         <div class="setup-row">
             <label class="toggle-label">
                 <input type="checkbox" id="enableTournament">
-                <span>Tournament</span>
+                <span>锦标赛</span>
             </label>
             <div id="tournamentControls" class="hidden">
-                <input id="levelMinutes" class="mono" type="number" value="20" min="1" style="width:52px" aria-label="Minutes per level">
-                <span style="color:var(--faint);font-size:12px">min/lvl</span>
-                <button id="timerBtn">Start Timer</button>
+                <input id="levelMinutes" class="mono" type="number" value="20" min="1" style="width:52px" aria-label="每级持续分钟数">
+                <span style="color:var(--faint);font-size:12px">分钟/级</span>
+                <button id="timerBtn">开始计时</button>
             </div>
         </div>
     </div>
@@ -214,26 +214,26 @@
     <!-- Sticky action bar -->
     <div id="actionBar">
         <div id="amountRow">
-            <button id="amountDown" class="amt-btn" aria-label="Decrease amount">−</button>
-            <input id="amount" class="mono" type="number" min="0" value="10" aria-label="Bet amount">
-            <button id="amountUp" class="amt-btn" aria-label="Increase amount">+</button>
-            <button class="preset" data-preset="min">Min</button>
+            <button id="amountDown" class="amt-btn" aria-label="减少金额">−</button>
+            <input id="amount" class="mono" type="number" min="0" value="10" aria-label="下注金额">
+            <button id="amountUp" class="amt-btn" aria-label="增加金额">+</button>
+            <button class="preset" data-preset="min">最小</button>
             <button class="preset" data-preset="half">½</button>
             <button class="preset" data-preset="twothirds">⅔</button>
-            <button class="preset" data-preset="pot">Pot</button>
-            <button class="preset" data-preset="allin">All In</button>
+            <button class="preset" data-preset="pot">底池</button>
+            <button class="preset" data-preset="allin">全押</button>
         </div>
         <div id="primaryActions">
-            <button id="foldBtn"  class="action-btn btn-fold">Fold</button>
-            <button id="checkBtn" class="action-btn btn-check">Check</button>
-            <button id="callBtn"  class="action-btn btn-call">Call</button>
-            <button id="betBtn"   class="action-btn btn-bet">Bet</button>
-            <button id="raiseBtn" class="action-btn btn-raise">Raise</button>
+            <button id="foldBtn"  class="action-btn btn-fold">弃牌</button>
+            <button id="checkBtn" class="action-btn btn-check">过牌</button>
+            <button id="callBtn"  class="action-btn btn-call">跟注</button>
+            <button id="betBtn"   class="action-btn btn-bet">下注</button>
+            <button id="raiseBtn" class="action-btn btn-raise">加注</button>
         </div>
         <div id="adminActions">
-            <button id="nextBtn">Skip Turn</button>
-            <button id="advanceRoundBtn">Next Street</button>
-            <button id="emptyPotBtn">Award Pot</button>
+            <button id="nextBtn">跳过行动</button>
+            <button id="advanceRoundBtn">下一阶段</button>
+            <button id="emptyPotBtn">分配底池</button>
         </div>
     </div>
 
@@ -242,21 +242,21 @@
     <!-- Award pot modal -->
     <div id="emptyPotModal" class="modal">
         <div class="modal-content">
-            <h2>Award Pot</h2>
+            <h2>分配底池</h2>
             <!-- Single pot (no all-ins) -->
             <div id="singlePotRow">
                 <div class="pot-preview">
-                    <span class="muted">Pot</span>
+                    <span class="muted">底池</span>
                     <span id="modalPotAmount" class="pot-amount mono">0</span>
                 </div>
-                <label>Winner</label>
-                <select id="winnerSelect"><option value="">Choose a player…</option></select>
+                <label>赢家</label>
+                <select id="winnerSelect"><option value="">请选择玩家…</option></select>
             </div>
             <!-- Side pots (all-in players present) -->
             <div id="potSelectorContainer" class="hidden"></div>
             <div class="modal-buttons">
-                <button id="cancelEmptyPot">Cancel</button>
-                <button id="confirmEmptyPot" class="btn-award">Award</button>
+                <button id="cancelEmptyPot">取消</button>
+                <button id="confirmEmptyPot" class="btn-award">确认分配</button>
             </div>
         </div>
     </div>
@@ -264,16 +264,16 @@
     <!-- Rebuy modal -->
     <div id="rebuyModal" class="modal">
         <div class="modal-content">
-            <h2>Rebuy</h2>
+            <h2>补充筹码</h2>
             <div class="pot-preview">
-                <span class="muted">Player</span>
+                <span class="muted">玩家</span>
                 <span id="rebuyPlayerLabel" style="font-weight:700;color:var(--text)"></span>
             </div>
-            <label>Amount</label>
+            <label>金额</label>
             <input id="rebuyAmount" class="mono" type="number" min="1" value="1000" style="width:100%">
             <div class="modal-buttons">
-                <button id="cancelRebuy">Cancel</button>
-                <button id="confirmRebuy" class="btn-start">Rebuy</button>
+                <button id="cancelRebuy">取消</button>
+                <button id="confirmRebuy" class="btn-start">补充筹码</button>
             </div>
         </div>
     </div>
@@ -287,6 +287,8 @@
             ANIMATION_THRESHOLD: 100, ANIMATION_DURATION: 300,
             SAVE_KEY: 'lpt_state'
         };
+
+        const STREET_LABELS = { preflop: '翻牌前', flop: '翻牌', turn: '转牌', river: '河牌', showdown: '摊牌' };
 
         let state = {
             players: [],
@@ -371,7 +373,7 @@
             const t = state.tournament;
             if (!t.active) { $('timerDisplay').classList.add('hidden'); return; }
             $('timerDisplay').classList.remove('hidden');
-            $('timerLevel').textContent = `Level ${t.level}`;
+            $('timerLevel').textContent = `第 ${t.level} 级`;
             $('timerCountdown').textContent = formatTime(t.secondsLeft);
             $('timerCountdown').classList.toggle('timer-urgent', t.secondsLeft <= 60 && t.secondsLeft > 0);
         };
@@ -385,7 +387,7 @@
             state.tournament.level++;
             state.tournament.sb = parseInt(els.smallBlind.value);
             state.tournament.bb = parseInt(els.bigBlind.value);
-            toast(`Level ${state.tournament.level} — Blinds ${els.smallBlind.value}/${els.bigBlind.value}`, 'win');
+            toast(`第 ${state.tournament.level} 级 — 盲注 ${els.smallBlind.value}/${els.bigBlind.value}`, 'win');
         };
 
         const runTimerTick = () => {
@@ -406,7 +408,7 @@
             t.active = true;
             t.levelMinutes = parseInt($('levelMinutes').value) || 20;
             t.secondsLeft = t.levelMinutes * 60;
-            $('timerBtn').textContent = 'Stop Timer';
+            $('timerBtn').textContent = '停止计时';
             syncTimerDisplay();
             _timerInterval = setInterval(runTimerTick, 1000);
         };
@@ -414,13 +416,13 @@
         const stopTimer = () => {
             clearInterval(_timerInterval); _timerInterval = null;
             state.tournament.active = false;
-            $('timerBtn').textContent = 'Start Timer';
+            $('timerBtn').textContent = '开始计时';
             syncTimerDisplay();
         };
 
         const resumeTimer = () => {
             if (!state.tournament.active) return;
-            $('timerBtn').textContent = 'Stop Timer';
+            $('timerBtn').textContent = '停止计时';
             $('levelMinutes').value = state.tournament.levelMinutes;
             _timerInterval = setInterval(runTimerTick, 1000);
             syncTimerDisplay();
@@ -448,7 +450,7 @@
         const render = () => {
             animateNumber(els.pot, state.pot);
             animateNumber(els.currentBet, state.currentBet);
-            els.streetName.textContent = state.street ? state.street.toUpperCase() : '—';
+            els.streetName.textContent = STREET_LABELS[state.street] || '—';
 
             const atShowdown = state.street === 'showdown';
             const curP = state.roundActive ? state.players[state.currentPlayerIndex] : null;
@@ -457,7 +459,7 @@
             if (curP) {
                 els.currentPlayerName.textContent = curP.name;
                 const toCall = Math.min(state.currentBet - curP.bet, curP.stack);
-                $('callBtn').textContent = `Call ${toCall}`;
+                $('callBtn').textContent = `跟注 ${toCall}`;
             }
 
             const n = state.players.length;
@@ -467,15 +469,15 @@
                 const isSB  = n >= 3 && i === (state.buttonPosition + 1) % n;
                 const isBB  = n >= 2 && i === (state.buttonPosition + (n === 2 ? 1 : 2)) % n;
                 const badges = [
-                    isBtn ? '<span class="badge badge-btn">BTN</span>' : '',
-                    isSB  ? '<span class="badge badge-sb">SB</span>'  : '',
-                    isBB  ? '<span class="badge badge-bb">BB</span>'  : ''
+                    isBtn ? '<span class="badge badge-btn">庄家</span>' : '',
+                    isSB  ? '<span class="badge badge-sb">小盲</span>'  : '',
+                    isBB  ? '<span class="badge badge-bb">大盲</span>'  : ''
                 ].join('');
-                const sub = p.folded ? 'folded' : p.stack === 0 ? 'all-in' : p.bet > 0 ? `bet ${p.bet}` : '';
+                const sub = p.folded ? '已弃牌' : p.stack === 0 ? '已全押' : p.bet > 0 ? `已下注 ${p.bet}` : '';
                 const canAct = p.stack === 0 && !state.roundActive;
                 const actions = canAct ? `<div class="player-action-row">
-                    <button class="player-action-btn btn-rebuy" data-action="rebuy" data-idx="${i}">Rebuy</button>
-                    <button class="player-action-btn btn-remove" data-action="remove" data-idx="${i}">Remove</button>
+                    <button class="player-action-btn btn-rebuy" data-action="rebuy" data-idx="${i}">补充筹码</button>
+                    <button class="player-action-btn btn-remove" data-action="remove" data-idx="${i}">移除玩家</button>
                 </div>` : '';
                 return `<div class="player${isActive ? ' active' : ''}${p.folded ? ' folded' : ''}${p.stack === 0 && !p.folded ? ' allin' : ''}">
                     <div class="player-top">
@@ -496,7 +498,7 @@
             if (state.handHistory.length > 0) {
                 histEl.classList.remove('hidden');
                 $('historyList').innerHTML = [...state.handHistory].reverse().map(h =>
-                    `<div class="history-entry">Hand ${h.hand}: <strong>${h.winner}</strong> wins <span class="mono">${h.amount}</span></div>`
+                    `<div class="history-entry">第 ${h.hand} 局：<strong>${h.winner}</strong> 赢得 <span class="mono">${h.amount}</span></div>`
                 ).join('');
             } else {
                 histEl.classList.add('hidden');
@@ -575,10 +577,10 @@
         const addPlayer = () => {
             const name = els.playerName.value.trim().substring(0, CONFIG.MAX_NAME_LENGTH);
             const stack = parseInt(els.playerStack.value) || CONFIG.DEFAULT_STACK;
-            if (!name) return toast('Enter a player name', 'error');
-            if (!/^[a-zA-Z0-9\s\-_]+$/.test(name)) return toast('Name: letters, numbers, spaces, - and _ only', 'error');
-            if (state.players.length >= CONFIG.MAX_PLAYERS) return toast(`Maximum ${CONFIG.MAX_PLAYERS} players`, 'error');
-            if (stack <= 0 || isNaN(stack)) return toast('Enter a valid stack amount', 'error');
+            if (!name) return toast('请输入玩家姓名', 'error');
+            if (!/^[\p{Script=Han}a-zA-Z0-9\s\-_]+$/u.test(name)) return toast('姓名仅支持汉字、英文字母、数字、空格、短横线和下划线', 'error');
+            if (state.players.length >= CONFIG.MAX_PLAYERS) return toast(`最多支持 ${CONFIG.MAX_PLAYERS} 位玩家`, 'error');
+            if (stack <= 0 || isNaN(stack)) return toast('请输入有效的初始筹码数量', 'error');
             state.players.push({ name, stack, bet: 0, folded: false, handContrib: 0 });
             els.playerName.value = '';
             render();
@@ -590,7 +592,7 @@
             state.players.splice(idx, 1);
             if (state.buttonPosition >= state.players.length)
                 state.buttonPosition = Math.max(0, state.players.length - 1);
-            toast(`${name} eliminated`, 'error');
+            toast(`${name} 已被移除`, 'error');
             render();
         };
 
@@ -610,9 +612,9 @@
         const confirmRebuy = () => {
             if (_rebuyPlayerIdx < 0) return;
             const amount = parseInt($('rebuyAmount').value);
-            if (isNaN(amount) || amount <= 0) return toast('Enter a valid rebuy amount', 'error');
+            if (isNaN(amount) || amount <= 0) return toast('请输入有效的补充筹码数量', 'error');
             state.players[_rebuyPlayerIdx].stack += amount;
-            toast(`${state.players[_rebuyPlayerIdx].name} rebuys ${amount.toLocaleString()}`, 'win');
+            toast(`${state.players[_rebuyPlayerIdx].name} 补充了 ${amount.toLocaleString()} 筹码`, 'win');
             closeRebuyModal();
             render();
         };
@@ -620,9 +622,9 @@
         // ── Start round ──────────────────────────────────────────
         const startRound = () => {
             if (state.players.length < CONFIG.MIN_PLAYERS)
-                return toast(`Need at least ${CONFIG.MIN_PLAYERS} players`, 'error');
+                return toast(`至少需要 ${CONFIG.MIN_PLAYERS} 位玩家`, 'error');
             if (state.players.filter(p => p.stack > 0).length < CONFIG.MIN_PLAYERS)
-                return toast('Not enough players with chips — rebuy or remove busted players', 'error');
+                return toast('有筹码的玩家不足，请补充筹码或移除出局玩家', 'error');
 
             state.roundActive = true; state.pot = 0; state.street = 'preflop';
             state.handCount++;
@@ -669,7 +671,7 @@
 
             if (state.street === 'showdown') {
                 state.toAct = new Set();
-                toast('Showdown — award the pot', 'win');
+                toast('进入摊牌阶段，请分配底池', 'win');
                 render(); return;
             }
 
@@ -690,10 +692,10 @@
         const bet = () => {
             if (!state.roundActive) return;
             const amount = parseInt(els.amount.value);
-            if (isNaN(amount) || amount <= 0) return toast('Enter a valid bet amount', 'error');
+            if (isNaN(amount) || amount <= 0) return toast('请输入有效的下注金额', 'error');
             const p = state.players[state.currentPlayerIndex];
-            if (state.currentBet > 0) return toast('Bet already placed — use Raise', 'error');
-            if (amount > p.stack)     return toast('Not enough chips', 'error');
+            if (state.currentBet > 0) return toast('本轮已有下注，请使用加注', 'error');
+            if (amount > p.stack)     return toast('筹码不足', 'error');
             addChips(p, amount);
             state.currentBet = amount; state.minRaise = amount;
             rebuildToAct(state.currentPlayerIndex);
@@ -703,13 +705,13 @@
         const raise = () => {
             if (!state.roundActive) return;
             const raiseAmt = parseInt(els.amount.value);
-            if (isNaN(raiseAmt) || raiseAmt <= 0) return toast('Enter a valid raise amount', 'error');
+            if (isNaN(raiseAmt) || raiseAmt <= 0) return toast('请输入有效的加注金额', 'error');
             if (state.minRaise > 0 && raiseAmt < state.minRaise)
-                return toast(`Minimum raise is ${state.minRaise}`, 'error');
+                return toast(`最少需加注 ${state.minRaise}`, 'error');
             const p = state.players[state.currentPlayerIndex];
             const toCall = state.currentBet - p.bet;
             const needed = toCall + raiseAmt;
-            if (needed > p.stack) return toast('Not enough chips', 'error');
+            if (needed > p.stack) return toast('筹码不足', 'error');
             addChips(p, needed);
             const prev = state.currentBet;
             state.currentBet = p.bet; state.minRaise = p.bet - prev;
@@ -728,7 +730,7 @@
         const check = () => {
             if (!state.roundActive) return;
             if (state.players[state.currentPlayerIndex].bet < state.currentBet)
-                return toast('Cannot check — must call or fold', 'error');
+                return toast('当前不能过牌，请跟注或弃牌', 'error');
             state.toAct.delete(state.currentPlayerIndex);
             nextPlayer();
         };
@@ -749,7 +751,7 @@
                 winner.stack += winAmt;
                 state.handHistory.push({ hand: state.handCount, winner: winner.name, amount: winAmt });
                 endRound();
-                toast(`${winner.name} wins ${winAmt}!`, 'win');
+                toast(`${winner.name} 赢得 ${winAmt} 筹码！`, 'win');
                 return;
             }
             if (state.toAct.size === 0) { advanceRound(); return; }
@@ -789,8 +791,8 @@
 
         // ── Award pot modal (with side pot support) ──────────────
         const openEmptyPotModal = () => {
-            if (state.pot === 0)       return toast('Pot is already empty', 'error');
-            if (!state.players.length) return toast('No players at the table', 'error');
+            if (state.pot === 0)       return toast('底池已为空', 'error');
+            if (!state.players.length) return toast('牌桌上还没有玩家', 'error');
             const pots = computePots();
             const modal = $('emptyPotModal');
 
@@ -798,7 +800,7 @@
                 $('singlePotRow').classList.remove('hidden');
                 $('potSelectorContainer').classList.add('hidden');
                 els.modalPotAmount.textContent = pots[0].amount;
-                els.winnerSelect.innerHTML = '<option value="">Choose a player…</option>' +
+                els.winnerSelect.innerHTML = '<option value="">请选择玩家…</option>' +
                     pots[0].eligible.map(i =>
                         `<option value="${i}">${state.players[i].name} (${state.players[i].stack.toLocaleString()})</option>`
                     ).join('');
@@ -808,11 +810,11 @@
                 $('potSelectorContainer').innerHTML = pots.map((pot, pi) => `
                     <div class="pot-selector-row">
                         <div class="pot-preview">
-                            <span class="muted">${pi === 0 ? 'Main Pot' : `Side Pot ${pi}`}</span>
+                            <span class="muted">${pi === 0 ? '主池' : `边池 ${pi}`}</span>
                             <span class="pot-amount mono">${pot.amount}</span>
                         </div>
                         <select class="side-pot-select" data-pot="${pi}">
-                            <option value="">Choose winner…</option>
+                            <option value="">请选择赢家…</option>
                             ${pot.eligible.map(i =>
                                 `<option value="${i}">${state.players[i].name} (${state.players[i].stack.toLocaleString()})</option>`
                             ).join('')}
@@ -834,7 +836,7 @@
 
             if (isSingle) {
                 const idx = els.winnerSelect.value;
-                if (idx === '') return toast('Select a player', 'error');
+                if (idx === '') return toast('请选择玩家', 'error');
                 const winner = state.players[parseInt(idx)];
                 const amt = state.pot;
                 els.pot.style.animation = 'potCollect .5s ease-out';
@@ -844,7 +846,7 @@
                     els.pot.style.animation = '';
                     closeEmptyPotModal();
                     endRound();
-                    toast(`${winner.name} wins ${amt}!`, 'win');
+                    toast(`${winner.name} 赢得 ${amt} 筹码！`, 'win');
                 }, 500);
             } else {
                 const selects = [...document.querySelectorAll('.side-pot-select')];
@@ -852,7 +854,7 @@
                 let valid = true;
                 selects.forEach((sel, pi) => {
                     if (sel.value === '') {
-                        toast(`Select a winner for ${pi === 0 ? 'the main pot' : `side pot ${pi}`}`, 'error');
+                        toast(`请选择${pi === 0 ? '主池' : `边池 ${pi}`}的赢家`, 'error');
                         valid = false;
                     }
                 });
@@ -869,7 +871,7 @@
                     });
                     state.handHistory.push({
                         hand: state.handCount,
-                        winner: assignments.map(a => state.players[a.winnerIdx].name).join(' & '),
+                        winner: assignments.map(a => state.players[a.winnerIdx].name).join('、'),
                         amount: assignments.reduce((s, a) => s + a.amount, 0)
                     });
                     els.pot.style.animation = '';
@@ -951,7 +953,7 @@
             }
             if (state.tournament.sb) els.smallBlind.value = state.tournament.sb;
             if (state.tournament.bb) els.bigBlind.value   = state.tournament.bb;
-            if (state.players.length > 0) toast('Game restored — welcome back!');
+            if (state.players.length > 0) toast('已恢复上次牌局，欢迎回来！');
         }
         render();
     </script>
@@ -966,8 +968,8 @@
     </script>
 
     <footer>
-        <p>Free poker tracker · No registration · Works on any device</p>
-        <p><a href="about.html">About</a> · <a href="guide.html">How to Play</a> · <a href="blog.html">Strategy</a></p>
+        <p>免费德州扑克计分器 · 无需注册 · 支持电脑和手机</p>
+        <p><a href="about.html">关于</a> · <a href="guide.html">玩法指南</a> · <a href="blog.html">策略文章</a></p>
     </footer>
 </body>
 </html>

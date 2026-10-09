@@ -1,7 +1,8 @@
 {
-  "name": "Live Poker Tracker - Free Poker Chip Counter",
-  "short_name": "Poker Tracker",
-  "description": "Free online poker tracker for managing chips, blinds, and game state. Perfect for home poker games and tournaments.",
+  "name": "德州扑克计分器",
+  "short_name": "德州计分器",
+  "description": "管理德州扑克玩家筹码、盲注与底池的计分工具，支持离线使用。",
+  "lang": "zh-CN",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0b0b0d",
