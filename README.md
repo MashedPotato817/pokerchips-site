@@ -86,6 +86,26 @@ CNAME               — custom domain
 
 ## Local development
 
+### English / 简体中文
+
+All six pages support English and Simplified Chinese. English is the default.
+Use the language selector in the header (or at the top of the multiplayer lobby).
+The selection is stored locally and carries across pages and refreshes. Changing
+language preserves the current hand, chip stacks, typed inputs and pot selections.
+
+Translations are in `translations.js`; `i18n.js` applies the selected language.
+Both scripts and both language-specific manifests are included in the offline cache.
+No build step or extra dependencies are required.
+
+For an isolated worktree preview, use a different port to keep browser storage
+and Service Worker caches separate from your existing test session:
+
+```powershell
+python -m http.server 8766 --bind 127.0.0.1
+# visit http://127.0.0.1:8766
+node --test tests/i18n.test.cjs
+```
+
 No build process — just serve the directory:
 
 ```bash
