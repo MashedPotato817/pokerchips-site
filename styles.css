@@ -52,6 +52,19 @@ body {
 .mono { font-family: 'JetBrains Mono', monospace; }
 .tnum { font-variant-numeric: tabular-nums; }
 
+/* Shared language control, including the standalone multiplayer lobby. */
+.language-control { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.language-control label { font-size: 12px; color: var(--muted); }
+.language-control select { width: auto; min-width: 105px; padding: 7px 10px; font-size: 13px; }
+.connect-box .language-control { justify-content: flex-end; margin-bottom: 22px; }
+html[lang="zh-CN"] .wordmark { letter-spacing: 1px; }
+@media (max-width: 700px) {
+    header[role="banner"] { flex-wrap: wrap; gap: 10px; }
+    header[role="banner"] nav { flex-wrap: wrap; }
+    .language-control { margin-left: auto; }
+    .language-control label { display: none; }
+}
+
 /* ── App body needs room for fixed action bar ─────────── */
 body.app { padding-bottom: 184px; }
 

@@ -14,29 +14,41 @@ function createGame() {
     const elements = new Map();
     const storage = new Map();
     const timers = new Map();
+    const documentListeners = new Map();
     let timerId = 0;
     function element(id) {
         if (!elements.has(id)) {
             const classes = new Set();
             elements.set(id, {
-                value: '', textContent: '0', innerHTML: '', style: {}, listeners: {},
+                value: '', textContent: '0', innerHTML: '', style: {}, listeners: {}, dataset: {},
                 classList: {
                     add: name => classes.add(name), remove: name => classes.delete(name),
                     contains: name => classes.has(name),
                     toggle: (name, on) => on ? classes.add(name) : classes.delete(name)
                 },
                 addEventListener(type, handler) { this.listeners[type] = handler; },
-                focus() {}, select() {}, querySelector: () => null
+                focus() {}, select() {}, querySelector: () => null, querySelectorAll: () => [],
+                setAttribute() {}
             });
         }
         return elements.get(id);
     }
     const context = vm.createContext({
-        document: { getElementById: element, querySelectorAll: () => [] },
+        document: {
+            documentElement: { lang: 'en' }, getElementById: element,
+            querySelectorAll: () => [], querySelector: () => null,
+            addEventListener(type, handler) { documentListeners.set(type, handler); },
+            dispatchEvent(event) { documentListeners.get(event.type)?.(event); }
+        },
+        addEventListener() {}, CustomEvent: class { constructor(type) { this.type = type; } },
         localStorage: { getItem: key => storage.get(key), setItem: (key, value) => storage.set(key, value) },
         setTimeout: callback => { timers.set(++timerId, callback); return timerId; },
         clearTimeout: id => timers.delete(id), setInterval: () => 0, clearInterval() {}, console
     });
+    // Load the same shared language scripts that the browser loads before the game.
+    for (const file of ['translations.js', 'i18n.js']) {
+        vm.runInContext(fs.readFileSync(path.join(__dirname, '..', file), 'utf8'), context);
+    }
     vm.runInContext(script, context);
     vm.runInContext(`state.players = [
         { name: '张三', stack: 980, bet: 20, folded: false, handContrib: 20 },
@@ -46,6 +58,7 @@ function createGame() {
     render();`, context);
     return {
         element,
+        language(value) { context.I18n.setLanguage(value); },
         snapshot: () => JSON.parse(vm.runInContext('JSON.stringify(serializeState())', context)),
         open(idx = 0) {
             const button = { dataset: { action: 'rename', idx: String(idx) } };
@@ -136,6 +149,21 @@ test('cancel discards the name draft', () => {
     game.element('cancelRename').onclick();
     assert.equal(game.snapshot().players[0].name, '张三');
     assert.equal(game.element('renamePlayerModal').classList.contains('active'), false);
+});
+
+test('switching languages during a hand preserves game state and an open name draft', () => {
+    const game = createGame();
+    const before = game.snapshot();
+    game.open();
+    game.element('renamePlayerName').value = '未保存草稿';
+    game.language('zh-CN');
+    assert.deepEqual(game.snapshot(), before);
+    assert.equal(game.element('renamePlayerName').value, '未保存草稿');
+    assert.equal(game.element('renamePlayerModal').classList.contains('active'), true);
+    assert.equal(game.element('callBtn').textContent, '跟注 980');
+    game.language('en');
+    assert.deepEqual(game.snapshot(), before);
+    assert.equal(game.element('callBtn').textContent, 'Call 980');
 });
 
 for (const name of ['   ', '<b>小明</b>', '名'.repeat(21)]) {
