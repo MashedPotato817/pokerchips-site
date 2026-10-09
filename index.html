@@ -77,6 +77,13 @@
         .btn-rebuy:hover  { background: rgba(95,207,142,.2); }
         .btn-remove:hover { background: rgba(236,106,106,.18); }
 
+        button.player-name {
+            background: transparent; border: 0; padding: 2px 0;
+            text-align: left; cursor: pointer;
+        }
+        button.player-name:hover { color: var(--gold); }
+        #renamePlayerName { width: 100%; margin-bottom: 18px; }
+
         /* Hand history */
         #handHistory { margin: 0 16px 8px; border-radius: 10px; overflow: hidden; }
         #handHistory.hidden { display: none; }
@@ -261,6 +268,19 @@
         </div>
     </div>
 
+    <!-- Rename player modal -->
+    <div id="renamePlayerModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="renamePlayerTitle">
+        <div class="modal-content">
+            <h2 id="renamePlayerTitle">修改玩家姓名</h2>
+            <label for="renamePlayerName">玩家姓名（最多 20 个字符）</label>
+            <input id="renamePlayerName" type="text" maxlength="20" autocomplete="off">
+            <div class="modal-buttons">
+                <button id="cancelRename">取消</button>
+                <button id="confirmRename" class="btn-start">保存姓名</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Rebuy modal -->
     <div id="rebuyModal" class="modal">
         <div class="modal-content">
@@ -301,6 +321,7 @@
         };
 
         let _rebuyPlayerIdx = -1, _timerInterval = null, _saveTimer = null;
+        let _renamePlayerIdx = -1;
 
         const $ = id => document.getElementById(id);
         const els = {
@@ -474,14 +495,14 @@
                     isBB  ? '<span class="badge badge-bb">大盲</span>'  : ''
                 ].join('');
                 const sub = p.folded ? '已弃牌' : p.stack === 0 ? '已全押' : p.bet > 0 ? `已下注 ${p.bet}` : '';
-                const canAct = p.stack === 0 && !state.roundActive;
+                const canAct = !state.roundActive;
                 const actions = canAct ? `<div class="player-action-row">
-                    <button class="player-action-btn btn-rebuy" data-action="rebuy" data-idx="${i}">补充筹码</button>
+                    ${p.stack === 0 ? `<button class="player-action-btn btn-rebuy" data-action="rebuy" data-idx="${i}">补充筹码</button>` : ''}
                     <button class="player-action-btn btn-remove" data-action="remove" data-idx="${i}">移除玩家</button>
                 </div>` : '';
                 return `<div class="player${isActive ? ' active' : ''}${p.folded ? ' folded' : ''}${p.stack === 0 && !p.folded ? ' allin' : ''}">
                     <div class="player-top">
-                        <span class="player-name">${p.name}</span>
+                        <button type="button" class="player-name" data-action="rename" data-idx="${i}" title="修改姓名" aria-label="修改${p.name}的姓名">${p.name}</button>
                         <span class="player-badges">${badges}</span>
                     </div>
                     <div class="player-stack-row">
@@ -586,14 +607,49 @@
             render();
         };
 
-        // ── Remove player (only when busted and round not active) ─
+        // ── Rename player ────────────────────────────────────────
+        const openRenameModal = idx => {
+            if (!state.players[idx]) return;
+            _renamePlayerIdx = idx;
+            $('renamePlayerName').value = state.players[idx].name;
+            $('renamePlayerModal').classList.add('active');
+            $('renamePlayerName').focus();
+            $('renamePlayerName').select();
+        };
+
+        const closeRenameModal = () => {
+            $('renamePlayerModal').classList.remove('active');
+            const button = els.players.querySelector(`[data-action="rename"][data-idx="${_renamePlayerIdx}"]`);
+            _renamePlayerIdx = -1;
+            if (button) button.focus();
+        };
+
+        const confirmRename = () => {
+            const player = state.players[_renamePlayerIdx];
+            if (!player) return;
+            const name = $('renamePlayerName').value.trim();
+            if (!name) return toast('请输入玩家姓名', 'error');
+            if (name.length > CONFIG.MAX_NAME_LENGTH) return toast(`姓名最多 ${CONFIG.MAX_NAME_LENGTH} 个字符`, 'error');
+            if (!/^[\p{Script=Han}a-zA-Z0-9\s\-_]+$/u.test(name)) return toast('姓名仅支持汉字、英文字母、数字、空格、短横线和下划线', 'error');
+            player.name = name;
+            render();
+            saveState();
+            closeRenameModal();
+            toast('玩家姓名已更新');
+        };
+
+        // ── Remove player (only when round not active) ────────────
         const removePlayer = idx => {
+            if (state.roundActive) return toast('牌局进行中无法移除玩家，请先结束或重置本局', 'error');
+            if (!state.players[idx]) return;
             const name = state.players[idx].name;
             state.players.splice(idx, 1);
+            if (idx < state.buttonPosition) state.buttonPosition--;
             if (state.buttonPosition >= state.players.length)
-                state.buttonPosition = Math.max(0, state.players.length - 1);
+                state.buttonPosition = 0;
             toast(`${name} 已被移除`, 'error');
             render();
+            saveState();
         };
 
         // ── Rebuy modal ──────────────────────────────────────────
@@ -923,12 +979,21 @@
         $('confirmRebuy').onclick    = confirmRebuy;
         $('rebuyAmount').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); confirmRebuy(); } });
         $('timerBtn').onclick        = () => state.tournament.active ? stopTimer() : startTimer();
+        $('cancelRename').onclick   = closeRenameModal;
+        $('confirmRename').onclick  = confirmRename;
+        $('renamePlayerModal').onclick = e => { if (e.target === $('renamePlayerModal')) closeRenameModal(); };
+        $('renamePlayerModal').addEventListener('keydown', e => {
+            if (e.isComposing) return;
+            if (e.key === 'Enter') { e.preventDefault(); confirmRename(); }
+            if (e.key === 'Escape') { e.preventDefault(); closeRenameModal(); }
+        });
 
-        // Event delegation for player Rebuy / Remove buttons
+        // Event delegation for player Rename / Rebuy / Remove buttons
         els.players.addEventListener('click', e => {
             const btn = e.target.closest('[data-action]');
             if (!btn) return;
             const idx = parseInt(btn.dataset.idx);
+            if (btn.dataset.action === 'rename') openRenameModal(idx);
             if (btn.dataset.action === 'rebuy')  openRebuyModal(idx);
             if (btn.dataset.action === 'remove') removePlayer(idx);
         });
