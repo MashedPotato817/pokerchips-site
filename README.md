@@ -9,6 +9,7 @@ Free, no-account Texas Hold'em chip tracker and tournament manager. Works offlin
 ## Features
 
 ### Single-player game tracker
+
 - Up to 10 players with named stacks
 - Auto-posts small/big blinds with heads-up exception
 - `toAct`-based betting round logic — checks, bets, raises, calls, folds all handled correctly with BB option
@@ -20,19 +21,23 @@ Free, no-account Texas Hold'em chip tracker and tournament manager. Works offlin
 - Hand history log
 
 ### Tournament mode
+
 - Configurable level timer (default 20 min/level)
 - Blinds auto-escalate 1.5× on level-up, rounded to the nearest 5
 - Timer survives page refresh — adjusts for elapsed offline time
 
 ### Bet sizing presets
+
 - Min, ½ pot, ⅔ pot, pot, all-in
 
 ### Multiplayer (P2P)
+
 - Host creates a room, shares a 6-character code
 - Guests connect via `connect.html`, game state syncs in real time over WebRTC (PeerJS)
 - No server required — works peer-to-peer
 
 ### PWA
+
 - Installable on mobile and desktop ("Add to Home Screen")
 - Full offline support via Service Worker
 
@@ -43,6 +48,7 @@ Free, no-account Texas Hold'em chip tracker and tournament manager. Works offlin
 Play immediately at [livepokerchips.com](https://livepokerchips.com) — no installation, no account.
 
 **Multiplayer:**
+
 1. One player opens [livepokerchips.com/connect.html](https://livepokerchips.com/connect.html) and clicks **Host New Game**
 2. Share the 6-character room code
 3. Other players join with the same code
@@ -52,7 +58,7 @@ Play immediately at [livepokerchips.com](https://livepokerchips.com) — no inst
 ## Tech stack
 
 | Layer | Choice |
-|---|---|
+| --- | --- |
 | Frontend | Plain HTML / CSS / JavaScript (no frameworks, no build step) |
 | Multiplayer | [PeerJS 1.5](https://peerjs.com/) — WebRTC via STUN |
 | Hosting | GitHub Pages + custom domain (`CNAME`) |
@@ -63,7 +69,7 @@ Play immediately at [livepokerchips.com](https://livepokerchips.com) — no inst
 
 ## Project structure
 
-```
+```text
 index.html          — single-player game tracker
 multiplayer.html    — multiplayer game room (PeerJS)
 connect.html        — multiplayer lobby (create / join room)
