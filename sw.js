@@ -1,4 +1,4 @@
-const CACHE_NAME = 'poker-tracker-v13-bilingual';
+const CACHE_NAME = 'poker-tracker-v15-navigation';
 const urlsToCache = [
   '/',
   '/index.html',

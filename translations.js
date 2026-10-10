@@ -1,5 +1,6 @@
 // Site copy. Each entry is [English, Simplified Chinese].
 globalThis.POKER_TRANSLATIONS = {
+  "Tracker": ["Tracker", "计分器"],
   "index.0": [
     "Live Poker Tracker - Free Online Poker Chip Counter & Game Manager",
     "德州扑克计分器 - 免费在线筹码计数与牌局管理"
